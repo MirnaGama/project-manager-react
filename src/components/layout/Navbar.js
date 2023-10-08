@@ -16,7 +16,7 @@ export default function Navbar() {
             <Link to="/">Home</Link>
           </li>
           <li className="item">
-            <Link to="/create-project">Create a New Project</Link>
+            <Link to="/my-projects">My Projects</Link>
           </li>
         </ul>
       </Container>
