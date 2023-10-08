@@ -1,20 +1,18 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from "./components/page/Home";
 import CreateProject from "./components/page/CreateProject";
 import NotFound from "./components/page/error/NotFound";
 
 import Container from "./components/layout/Container";
+import Navbar from "./components/layout/Navbar";
 
 function App() {
   return (
 
     <Router>
-      <div>
-        <Link to="/">Home</Link>
-        <Link to="/create-project">Create a New Project</Link>
-      </div>
+      <Navbar/>
       <Container>
       <Routes>
         <Route exact path="/" element={<Home />} />
