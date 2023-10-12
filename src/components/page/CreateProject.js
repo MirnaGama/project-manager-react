@@ -1,10 +1,16 @@
+import { useNavigate } from "react-router-dom";
+
 import "./CreateProject.modules.css";
 import "bootstrap/dist/css/bootstrap.css";
 import baseConnection from "../../config/baseConnection";
 import ProjectForm from "../layout/ProjectForm";
 import { sendErrorToast, sendSuccessToast } from "../util/Toast";
 
+
 export default function CreateProject() {
+
+  const navigate = useNavigate();
+
   const createNewProject = (project) => {
     project.cost = 0;
     project.services = [];
@@ -13,6 +19,7 @@ export default function CreateProject() {
       .post("/projects", project)
       .then((response) => {
         sendSuccessToast("Project created successfully!");
+        navigate('/my-projects');
       })
       .catch((err) => {
         sendErrorToast("An unexpected error occured!");
