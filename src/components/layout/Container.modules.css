@@ -10,10 +10,6 @@
     min-height: 75%;
 }
 
-.start {
-    justify-content: flex-start;
-}
-
 .column {
     flex-direction: column;
     justify-content: flex-start;
