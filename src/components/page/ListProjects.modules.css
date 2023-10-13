@@ -1,0 +1,12 @@
+.list_projects_container {
+    padding: 2em;
+    justify-content: flex-start;
+}
+
+.title_container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2em;
+}
+
+
