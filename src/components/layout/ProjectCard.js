@@ -3,7 +3,14 @@ import { Button, Card, ListGroup } from "react-bootstrap";
 import { BsPencil, BsFillTrashFill } from "react-icons/bs";
 import { MdAttachMoney } from "react-icons/md";
 
-export default function ProjectCard({ name, budget, category, handleRemove }) {
+export default function ProjectCard({ id, name, budget, category, handleRemove }) {
+  
+  const handleProjectCardRemove = (e) => {
+    e.preventDefault();
+    handleRemove(id);
+  }
+  
+  
   return (
     <Card className="project_card">
       <Card.Body>
@@ -19,7 +26,7 @@ export default function ProjectCard({ name, budget, category, handleRemove }) {
       </ListGroup>
       <Card.Body className="project_card_button_group">
         <Card.Link href="/" className="btn btn-dark"><BsPencil/> Edit</Card.Link>
-        <Button className="btn btn-dark"><BsFillTrashFill/> Delete</Button>
+        <Button className="btn btn-dark" onClick={handleProjectCardRemove}><BsFillTrashFill/> Remove</Button>
       </Card.Body>
     </Card>
   );

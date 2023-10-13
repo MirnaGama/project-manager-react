@@ -4,7 +4,7 @@ import LinkButton from "../layout/LinkButton";
 
 import baseConnection from "../../config/baseConnection";
 import ProjectCard from "../layout/ProjectCard";
-import { sendErrorToast } from "../util/Toast";
+import { sendErrorToast, sendSuccessToast } from "../util/Toast";
 
 import { Spinner } from "react-bootstrap";
 import { useEffect, useState } from "react";
@@ -13,15 +13,30 @@ export default function ListProjects() {
   const [projects, setProjects] = useState();
 
   useEffect(() => {
+    getProjects();
+  }, [projects]);
+
+  const getProjects = () => {
     baseConnection
-      .get("/projects")
-      .then((response) => {
-        setProjects(response.data);
+    .get("/projects")
+    .then((response) => {
+      setProjects(response.data);
+    })
+    .catch((err) => {
+      sendErrorToast("Network error. Try again later")
+    });
+  }
+  
+  function removeProject(id) {
+    baseConnection
+      .delete(`/projects/${id}`).then(response => {
+        sendSuccessToast("Project successfully deleted!");
+        getProjects();
       })
       .catch((err) => {
         sendErrorToast("Network error. Try again later")
       });
-  }, [projects]);
+  }
 
   return (
     <div className="list_projects_container">
@@ -36,9 +51,11 @@ export default function ListProjects() {
             return (
               <ProjectCard
                 key={project.id}
+                id={project.id}
                 name={project.name}
                 budget={project.budget}
                 category={project.category?.name}
+                handleRemove={removeProject}
               />
             );
           }) : <Spinner animation="border" variant="dark" style={{ width: "100px", height: "100px", margin: "4em" }} />
