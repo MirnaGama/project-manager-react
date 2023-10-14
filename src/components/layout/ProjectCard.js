@@ -13,7 +13,7 @@ export default function ProjectCard({ id, name, budget, category, handleRemove }
   
   
   return (
-    <Card className="project_card">
+    <Card className="project_card m-3">
       <Card.Body>
         <Card.Title>{name}</Card.Title>
       </Card.Body>
