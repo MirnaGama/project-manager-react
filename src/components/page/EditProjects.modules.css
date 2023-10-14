@@ -1,0 +1,30 @@
+.edit_project_details {
+    padding: 2em;
+}
+
+.edit_project_details h2, 
+.edit_project_details p {
+    margin-bottom: 0.5em;
+}
+
+.edit_project_details h2 {
+    background-color: black;
+    color: white;
+    padding: 0.4em;
+}
+
+.edit_project_details span {
+    font-weight: bold;
+}
+
+.edit_project_info {
+    width: 100%
+}
+
+.edit_project_details_container {
+    border-bottom: 1px solid grey;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}

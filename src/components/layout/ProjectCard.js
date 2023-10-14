@@ -2,6 +2,7 @@ import "./ProjectCard.modules.css";
 import { Button, Card, ListGroup } from "react-bootstrap";
 import { BsPencil, BsFillTrashFill } from "react-icons/bs";
 import { MdAttachMoney } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 export default function ProjectCard({ id, name, budget, category, handleRemove }) {
   
@@ -25,7 +26,7 @@ export default function ProjectCard({ id, name, budget, category, handleRemove }
         </ListGroup.Item>
       </ListGroup>
       <Card.Body className="project_card_button_group">
-        <Card.Link href="/" className="btn btn-dark"><BsPencil/> Edit</Card.Link>
+        <Link to={`/edit-project/${id}`} className="btn btn-dark"><BsPencil/> Edit</Link>
         <Button className="btn btn-dark" onClick={handleProjectCardRemove}><BsFillTrashFill/> Remove</Button>
       </Card.Body>
     </Card>
