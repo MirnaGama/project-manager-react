@@ -29,7 +29,7 @@ export default function EditProject() {
       .catch((err) => {
         sendErrorToast("Network error. Try again later");
       });
-  });
+    }, []);
 
   const toggleProjectForm = () => setShowProjectForm(!showProjectForm);
 
