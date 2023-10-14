@@ -10,10 +10,12 @@ import ProjectForm from "../layout/ProjectForm";
 
 import "./EditProjects.modules.css";
 import ServiceForm from "../layout/ServiceForm";
+import ServiceCard from "../layout/ServiceCard";
 
 export default function EditProject() {
   const { id } = useParams();
   const [project, setProject] = useState();
+  const [services, setServices] = useState([]);
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [showServiceForm, setShowServiceForm] = useState(false);
 
@@ -22,6 +24,7 @@ export default function EditProject() {
       .get("projects/" + id)
       .then((response) => {
         setProject(response.data);
+        setServices(response.data.services);
       })
       .catch((err) => {
         sendErrorToast("Network error. Try again later");
@@ -51,6 +54,7 @@ export default function EditProject() {
       .then((response) => {
         sendSuccessToast("Project edited successfully!");
         setProject(response.data);
+        setServices(response.data.services);
       })
       .catch((err) => {
         sendErrorToast("Network error. Try again later");
@@ -80,6 +84,18 @@ export default function EditProject() {
 
     toggleServiceForm();
   };
+
+  const removeService = (id, cost) => {
+    const updatedServices = project.services.filter(service => {
+      return service.id !== id;
+    });
+
+    project.services = updatedServices;
+    project.cost = parseFloat(project.cost) - parseFloat(cost);
+    updateProject(project);
+
+    sendSuccessToast("Service removed successfully!");
+  }
 
   return (
     <>
@@ -119,8 +135,17 @@ export default function EditProject() {
             </Button>
           </div>
           {!showServiceForm ? (
-            <div className="mt-5">
-              <p>My services...</p>
+            <div className="mt-5 card_row">
+              {services.length > 0 &&
+                services.map((service) => (
+                  <ServiceCard
+                  id={service.id}
+                  name={service.name}
+                  cost={service.cost}
+                  description={service.description}
+                  handleRemove={removeService}
+                  />
+                ))}
             </div>
           ) : (
             <ServiceForm
