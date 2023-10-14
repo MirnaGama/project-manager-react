@@ -45,7 +45,7 @@ export default function ListProjects() {
         <LinkButton to="/create-project" text="New Project" />
       </div>
 
-      <Container className="start">
+      <div className="card_row">
         {projects ?
           projects.map((project) => {
             return (
@@ -60,7 +60,7 @@ export default function ListProjects() {
             );
           }) : <Spinner animation="border" variant="dark" style={{ width: "100px", height: "100px", margin: "4em" }} />
           }
-      </Container>
+      </div>
     </div>
   );
 }
