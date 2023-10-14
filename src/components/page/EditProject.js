@@ -1,3 +1,5 @@
+import { parse, v4 as uuidv4 } from "uuid";
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Spinner } from "react-bootstrap";
@@ -7,11 +9,13 @@ import { sendErrorToast, sendSuccessToast } from "../util/Toast";
 import ProjectForm from "../layout/ProjectForm";
 
 import "./EditProjects.modules.css";
+import ServiceForm from "../layout/ServiceForm";
 
 export default function EditProject() {
   const { id } = useParams();
   const [project, setProject] = useState();
   const [showProjectForm, setShowProjectForm] = useState(false);
+  const [showServiceForm, setShowServiceForm] = useState(false);
 
   useEffect(() => {
     baseConnection
@@ -26,6 +30,8 @@ export default function EditProject() {
 
   const toggleProjectForm = () => setShowProjectForm(!showProjectForm);
 
+  const toggleServiceForm = () => setShowServiceForm(!showServiceForm);
+
   const editProject = (project) => {
     if (project.budget < project.cost) {
       sendErrorToast(
@@ -39,11 +45,34 @@ export default function EditProject() {
       .then((response) => {
         sendSuccessToast("Project edited successfully!");
         setProject(response.data);
-        toggleProjectForm();
       })
       .catch((err) => {
         sendErrorToast("Network error. Try again later");
       });
+  };
+
+  const createService = (project) => {
+    // get last service for validation
+    const lastService = project.services.pop();
+
+    lastService.id = uuidv4();
+
+    const newCost = parseFloat(lastService.cost) + parseFloat(project.cost);
+
+    if (newCost > parseFloat(project.budget)) {
+      sendErrorToast(
+        "Maximum budget exceeded. Please check the cost of the service"
+      );
+      return false;
+    }
+
+    project.services.push(lastService);
+    project.cost = newCost;
+
+    // update project
+    editProject(project);
+
+    toggleServiceForm();
   };
 
   return (
@@ -77,6 +106,23 @@ export default function EditProject() {
               </div>
             )}
           </div>
+          <div className="edit_project_services mt-3">
+            <h3>Services</h3>
+            <Button onClick={toggleServiceForm} variant="dark">
+              {!showServiceForm ? "Add Service" : "Close"}
+            </Button>
+          </div>
+          {!showServiceForm ? (
+            <div className="mt-5">
+              <p>My services...</p>
+            </div>
+          ) : (
+            <ServiceForm
+              handleSubmit={createService}
+              btnText="Add Service"
+              projectData={project}
+            />
+          )}
         </div>
       ) : (
         <Spinner
