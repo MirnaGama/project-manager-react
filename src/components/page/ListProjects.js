@@ -14,7 +14,7 @@ export default function ListProjects() {
 
   useEffect(() => {
     getProjects();
-  }, [projects]);
+  }, []);
 
   const getProjects = () => {
     baseConnection
