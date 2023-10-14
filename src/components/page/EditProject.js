@@ -40,6 +40,12 @@ export default function EditProject() {
       return;
     }
 
+    updateProject(project);
+
+    toggleProjectForm();
+  };
+
+  const updateProject = (project) => {
     baseConnection
       .put("projects/" + id, project)
       .then((response) => {
@@ -70,7 +76,7 @@ export default function EditProject() {
     project.cost = newCost;
 
     // update project
-    editProject(project);
+    updateProject(project);
 
     toggleServiceForm();
   };
