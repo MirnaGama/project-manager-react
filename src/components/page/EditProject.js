@@ -67,9 +67,13 @@ export default function EditProject() {
 
     lastService.id = uuidv4();
 
-    const newCost = parseFloat(lastService.cost) + parseFloat(project.cost);
+    let newCost = Number(lastService.cost);
 
-    if (newCost > parseFloat(project.budget)) {
+    if (Number(project.cost) > 0) {
+      newCost = Number(lastService.cost) + Number(project.cost);
+    }
+
+    if (newCost > Number(project.budget)) {
       sendErrorToast(
         "Maximum budget exceeded. Please check the cost of the service"
       );
@@ -115,7 +119,7 @@ export default function EditProject() {
                   <span>Maximum Budget: </span> $ {project.budget}
                 </p>
                 <p>
-                  <span>Total Cost: </span> {project.cost}
+                  <span>Total Cost: </span> $ {project.cost}
                 </p>
               </div>
             ) : (

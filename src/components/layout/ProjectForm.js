@@ -49,7 +49,7 @@ export default function ProjectForm({ btnText, handleSubmit, projectData }) {
       </Form.Group>
       <Form.Group className="mb-4">
         <Form.Control
-          type="text"
+          type="number"
           name="budget"
           placeholder="Enter a maximum budget"
           onChange={handleChange}
