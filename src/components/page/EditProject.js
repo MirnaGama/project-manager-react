@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Spinner } from "react-bootstrap";
-import baseConnection from "../../config/baseConnection";
 import { sendErrorToast, sendSuccessToast } from "../util/Toast";
 
 import ProjectForm from "../layout/ProjectForm";
@@ -11,6 +10,7 @@ import ProjectForm from "../layout/ProjectForm";
 import "./EditProjects.modules.css";
 import ServiceForm from "../layout/ServiceForm";
 import ServiceCard from "../layout/ServiceCard";
+import ProjectService from "../../services/ProjectService";
 
 export default function EditProject() {
   const { id } = useParams();
@@ -20,8 +20,7 @@ export default function EditProject() {
   const [showServiceForm, setShowServiceForm] = useState(false);
 
   useEffect(() => {
-    baseConnection
-      .get("projects/" + id)
+    ProjectService.getProject(id)
       .then((response) => {
         setProject(response.data);
         setServices(response.data.services);
@@ -49,8 +48,7 @@ export default function EditProject() {
   };
 
   const updateProject = (project) => {
-    baseConnection
-      .put("projects/" + id, project)
+    ProjectService.updateProject(project.id, project)
       .then((response) => {
         sendSuccessToast("Project edited successfully!");
         setProject(response.data);

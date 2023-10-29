@@ -1,12 +1,12 @@
 import "./ListProjects.modules.css";
 import LinkButton from "../layout/LinkButton";
 
-import baseConnection from "../../config/baseConnection";
 import ProjectCard from "../layout/ProjectCard";
 import { sendErrorToast, sendSuccessToast } from "../util/Toast";
 
 import { Spinner } from "react-bootstrap";
 import { useEffect, useState } from "react";
+import ProjectService from "../../services/ProjectService";
 
 export default function ListProjects() {
   const [projects, setProjects] = useState();
@@ -16,8 +16,7 @@ export default function ListProjects() {
   }, []);
 
   const getProjects = () => {
-    baseConnection
-    .get("/projects")
+    ProjectService.getProjects()
     .then((response) => {
       setProjects(response.data);
     })
@@ -27,8 +26,7 @@ export default function ListProjects() {
   }
   
   function removeProject(id) {
-    baseConnection
-      .delete(`/projects/${id}`).then(response => {
+    ProjectService.deleteProject(id).then(response => {
         sendSuccessToast("Project successfully deleted!");
         getProjects();
       })

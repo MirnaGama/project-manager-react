@@ -2,9 +2,9 @@ import { useNavigate } from "react-router-dom";
 
 import "./CreateProject.modules.css";
 import "bootstrap/dist/css/bootstrap.css";
-import baseConnection from "../../config/baseConnection";
 import ProjectForm from "../layout/ProjectForm";
 import { sendErrorToast, sendSuccessToast } from "../util/Toast";
+import ProjectService from "../../services/ProjectService";
 
 
 export default function CreateProject() {
@@ -12,12 +12,7 @@ export default function CreateProject() {
   const navigate = useNavigate();
 
   const createNewProject = (project) => {
-    project.cost = 0;
-    project.services = [];
-
-    baseConnection
-      .post("/projects", project)
-      .then((response) => {
+      ProjectService.createProject(project).then((response) => {
         sendSuccessToast("Project created successfully!");
         navigate('/my-projects');
       })
