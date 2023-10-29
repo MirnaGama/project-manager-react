@@ -28,6 +28,11 @@ const ProjectService = {
     deleteProject: async (id) => {
         return await baseConnection
             .delete(`/projects/${id}`);
+    },
+
+    getCategories: async () => {
+        return await baseConnection
+        .get("/categories");
     }
 }
 

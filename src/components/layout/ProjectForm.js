@@ -1,15 +1,14 @@
 import { Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
-import baseConnection from "../../config/baseConnection";
 import { useEffect, useState } from "react";
+import ProjectService from "../../services/ProjectService";
 
 export default function ProjectForm({ btnText, handleSubmit, projectData }) {
   const [categories, setCategories] = useState([]);
   const [project, setProject] = useState(projectData || {});
 
   useEffect(() => {
-    baseConnection
-      .get("/categories")
+   ProjectService.getCategories()
       .then((response) => {
         setCategories(response.data);
       })
